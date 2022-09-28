@@ -1,20 +1,22 @@
+import { Suspense } from 'react'
+import { Spin } from 'antd'
 import { getHomeData } from '../api/api-home'
 import { HelloWord } from '../components/HelloWord'
-// TODO: husky lint
-// TODO: router
-// TODO: redux
 import '../assets/style/app.scss'
-import { Home } from './home'
+import RoutesList from '../router/router'
+
+// test env
+console.log('当前环境：', import.meta.env.VITE_PROJECT_ENV)
+// test request
+getHomeData({ appKey: 'appKey' })
 
 function App() {
-  // test env
-  console.log('当前环境：', import.meta.env.VITE_PROJECT_ENV)
-  // test request
-  getHomeData({ appKey: 'appKey' })
   return (
       <div id="app_index">
         <HelloWord msg="Be-CLI" />
-          <Home/>
+          <Suspense fallback={<Spin/>}>
+              {RoutesList()}
+          </Suspense>
       </div>
   )
 }
